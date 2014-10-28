@@ -87,6 +87,8 @@ var APP = APP || {};
 				        reviewScore: num.score,
 				    };
 				});
+
+				//hier bereken ik het gemiddeld met behulp van de _.reduce functie van underscore
 				parsedData[i].reviews = _.reduce(parsedData[i].reviews, function(memo, num){
 					var average = memo + num.reviewScore;
 					console.log(memo + num.reviewScore);
@@ -108,7 +110,7 @@ var APP = APP || {};
 		},
 
 		filter: function(genre) {
-		// retrieve latest data
+			//haal data op uit localstorage object
 			var data = APP.localStorage.data.movies;
 
 			// loop over data
@@ -117,7 +119,7 @@ var APP = APP || {};
 					return _.contains(data.genres, genre);
 				});
 	        };
-	        // send movies with data to transparancy
+	        // Start de movies met de gemanipuleerde data
 	        APP.sections.genre(data);
 			}
 		
@@ -128,7 +130,7 @@ var APP = APP || {};
 
 
 	APP.moviecontent = {
-		// DATA OBJECT MET 2 modules
+		
 		about: {
 			title: "About this app",
 			description: "All of the content on this app and the website has been requested directly by young people.  The Your Questions are real questions from real young people as are the words in the Sextionary – and therefore we believe they are valid aspects of the site."
@@ -141,7 +143,7 @@ var APP = APP || {};
 
 	APP.router = {
 		init: function() {
-			console.log("kickoff router"); // runs router function to initialize hashes
+			console.log("kickoff router"); // router kijkt wat er achter de url staat.
 
 			routie({
 				'about': function() {
@@ -189,7 +191,6 @@ var APP = APP || {};
 			Transparency.render(aboutSection, APP.moviecontent.about)
 		},
 		movies: function() {
-			// console.log('testje');
 			//selecteer de juiste section in de html als variabele
 			document.querySelector('.mainnav').classList.remove('expand');
 			var moviesSection = document.querySelector('[data-route=movies]');
@@ -280,7 +281,7 @@ var APP = APP || {};
 		genre: function(data) {
 			document.querySelector('.genres').classList.remove('expand');
 			var moviesSection = document.querySelector('[data-route=genre]');
-			console.log();
+			console.log('genrepagina');
 			Transparency.render(moviesSection, data, {
 			// directive for setting cover value in src attribute
 				cover : {
