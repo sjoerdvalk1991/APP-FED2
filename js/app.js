@@ -22,7 +22,7 @@ var APP = APP || {};
 			APP.router.init(); // start de init methode van het router object
 			APP.gestures.init();
 			APP.sections.init();
-			if (!(localStorage.getItem('movies'))) {
+			if (!(localStorage.getItem('movies'))) { //check of er data in localstorage zit zo niet start splashscreen en setdata
 			APP.splashscreen.init();
 			APP.localStorage.setData();
 				console.log('Made a new data request');
@@ -36,7 +36,7 @@ var APP = APP || {};
 			}							 // start de init methode van het sections object
 	}
 
-
+	//visualiseer dat de data moet worden opgehaald start een loader van 2 seconden
 	APP.splashscreen = {
 		init: function() {
 			this.spinner();
@@ -72,7 +72,7 @@ var APP = APP || {};
 			}
 		}
 	}
-
+	//manipuleer de data en geef hem daarna  door aan de transparency
 	APP.underscore = {
 		dataManipulate: function () {
 			//console.log(data);
@@ -87,8 +87,6 @@ var APP = APP || {};
 				        reviewScore: num.score,
 				    };
 				});
-
-				//hier bereken ik het gemiddeld met behulp van de _.reduce functie van underscore
 				parsedData[i].reviews = _.reduce(parsedData[i].reviews, function(memo, num){
 					var average = memo + num.reviewScore;
 					console.log(memo + num.reviewScore);
@@ -108,9 +106,9 @@ var APP = APP || {};
 
 				APP.sections.movies();
 		},
-
+		//Kijk welk genre is aangeklikt en geef films door aan de sections
 		filter: function(genre) {
-			//haal data op uit localstorage object
+		// retrieve latest data
 			var data = APP.localStorage.data.movies;
 
 			// loop over data
@@ -119,7 +117,7 @@ var APP = APP || {};
 					return _.contains(data.genres, genre);
 				});
 	        };
-	        // Start de movies met de gemanipuleerde data
+	        // send movies with data to transparancy
 	        APP.sections.genre(data);
 			}
 		
@@ -130,7 +128,7 @@ var APP = APP || {};
 
 
 	APP.moviecontent = {
-		
+		// DATA OBJECT MET 2 modules
 		about: {
 			title: "About this app",
 			description: "All of the content on this app and the website has been requested directly by young people.  The Your Questions are real questions from real young people as are the words in the Sextionary – and therefore we believe they are valid aspects of the site."
@@ -143,7 +141,7 @@ var APP = APP || {};
 
 	APP.router = {
 		init: function() {
-			console.log("kickoff router"); // router kijkt wat er achter de url staat.
+			console.log("kickoff router"); // runs router function to initialize hashes
 
 			routie({
 				'about': function() {
@@ -191,6 +189,7 @@ var APP = APP || {};
 			Transparency.render(aboutSection, APP.moviecontent.about)
 		},
 		movies: function() {
+			// console.log('testje');
 			//selecteer de juiste section in de html als variabele
 			document.querySelector('.mainnav').classList.remove('expand');
 			var moviesSection = document.querySelector('[data-route=movies]');
@@ -281,7 +280,7 @@ var APP = APP || {};
 		genre: function(data) {
 			document.querySelector('.genres').classList.remove('expand');
 			var moviesSection = document.querySelector('[data-route=genre]');
-			console.log('genrepagina');
+			console.log();
 			Transparency.render(moviesSection, data, {
 			// directive for setting cover value in src attribute
 				cover : {
